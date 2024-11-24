@@ -10,6 +10,7 @@ import time
 from font_fredoka_one import FredokaOne
 from inky.auto import auto
 from PIL import Image, ImageDraw, ImageFont
+from flask import Flask, render_template, redirect, flash
 
 __STATE_FILE__="/tmp/scoreboard.state"
 
@@ -78,12 +79,52 @@ def fetch_state():
 
     return nights, last_updated
 
-def main():
-    inky_display = init()
-    draw_message(inky_display, "Loading...", "Please wait")
+def write_state(val:int):
+    with open(__STATE_FILE__, mode='w') as fh:
+        fh.write(f"{val}")
+        fh.close()
+
+def update_scoreboard_from_state(inky_display):
     nights, last_updated = fetch_state()
-    # time.sleep(30)
     update_scoreboard(inky_display, nights, last_updated)
 
-if __name__ == "__main__":
+global_display = None
+def main():
+    global global_display
+    inky_display = init()
+    global_display = inky_display
+    draw_message(inky_display, "Loading...", "Please wait")
+    time.sleep(3)
+    update_scoreboard_from_state(inky_display)
+
+# Configure the web app
+app = Flask(__name__)
+app.secret_key = '68df685208ffe5c10be72b08fb021a2be2e8e82b5c0dbd3be0677c5a077be257'
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/clean')
+def record_clean():
+    global global_display
+    # INCREMENT COUNTER
+    cur, _ = fetch_state()
+    write_state(int(cur)+1)
+    update_scoreboard_from_state(global_display)
+    flash("Clean dishes recorded.")
+    return redirect('/')
+
+@app.route('/dirty')
+def record_dirty():
+    global global_display
+    # RESET COUNTER
+    write_state(0)
+    update_scoreboard_from_state(global_display)
+    flash("Dirty dishes recorded, score reset.")
+    return redirect('/')
+
+print(f"__name__ == '{__name__}'")
+
+if __name__ == "__main__" or __name__ == "scoreboard":
     main()
