@@ -28,3 +28,5 @@ The hardware for this project is pretty simple:
 ## Usage
 
 - You'll want to go to your RPi on port 5000
+
+![Photograph of the display](screenshots/display.jpg)
