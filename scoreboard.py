@@ -3,9 +3,6 @@
 import os
 import time
 from datetime import date
-import json
-import time
-# import fs
 
 from font_fredoka_one import FredokaOne
 from inky.auto import auto
@@ -99,6 +96,12 @@ def main():
 
 # Configure the web app
 app = Flask(__name__)
+
+# Hey y'all, I know this is technically a secret for this framework, but
+# it doesn't grant any access. It's just that Flask throws errors if I try
+# to use flash() without having one defined. Thank you for your concern
+# regarding the secret which is just randomly-generated gibberish to make
+# Flask STFU.
 app.secret_key = '68df685208ffe5c10be72b08fb021a2be2e8e82b5c0dbd3be0677c5a077be257'
 
 @app.route('/')
