@@ -1,0 +1,29 @@
+@font-face {
+ font-family: 'Raleway';
+ src: url('/static/fonts/Raleway-Medium.ttf');
+}
+
+* {
+  font-family: 'Raleway';
+}
+
+.button {
+  display: inline-block;
+  border: 1px solid black;
+  text-align: center;
+  width: 160px;
+  margin: 20px;
+  padding: 40px;
+}
+
+.clean {
+  background-color: #98FB98;
+}
+
+.dirty {
+  background-color: #F08080;
+}
+
+div#main {
+  text-align: center;
+}

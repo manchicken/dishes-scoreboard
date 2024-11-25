@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Eventually I'd like to make this look better on Mobile, but for now I'll settle for what I've got. -->
+    <meta name="viewport" value="width=device-width, initial-scale=1" />
+    <title>Dishes Scoreboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+</head>
+<body>
+  <div id="main">
+    <h1>How're the dishes?</h1>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    <br/>
+    <a class="button dirty" href="{{ url_for('record_dirty') }}">Dirty</a>
+    <br/>
+    <a class="button clean" href="{{ url_for('record_clean') }}">Clean</a>
+  </div>
+</body>
+</html>

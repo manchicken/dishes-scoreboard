@@ -1,0 +1,10 @@
+[Unit]
+Description=Systemd service to start the scoreboard on startup
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/manchicken/Devel/dishes-scoreboard/run-scoreboard.sh
+
+[Install]
+WantedBy=multi-user.target
